@@ -4,7 +4,7 @@
 #include <string>
 #include <conio.h>
 
-class password {
+class Password {
     protected:
     //members
     std::string pass_input;
@@ -16,11 +16,11 @@ class password {
 
     public:
     //methods
-    std::string record_input(std::string message);
-    int validate_input();
+    void record_input(std::string message);
+    void validate_input();
     
     //constructors
-    password() {
+    Password() {
         pass_flag = 0;
         pass_input = "";
     }
@@ -28,34 +28,31 @@ class password {
 
 int main() {
     std::string input;
-    password newPassword;
-    input = newPassword.record_input("Enter a password:\t");
-    std::cout << "The password entered is:\t" << input << std::endl;
-    // std::regex integer("(\\+|-)?[[:digit:]]+");
-    // while (true) {
-    //     std::cout << "Give me an integer:\t";
-    //     std::cin >> input;
-    //     if (!std::cin) {
-    //         break;
-    //     }
-        
-    //     if (input == "q") {
-    //         break;
-    //     }
-
-    //     if (std::regex_match(input, integer)) {
-    //         std::cout << "Integer " << std::endl;
-    //     } else {
-    //         std::cout << "Invalid input!" << std::endl;
-    //     }
-    // }
-
+    Password newPassword;
+    newPassword.record_input("Enter a password:\t");
+    newPassword.validate_input();
     return 0;
 }
 
-std::string password::record_input(std::string message) {
+void Password::record_input(std::string message) {
     std::cout << message;
     std::string input;
     std::cin >> input;
-    return input;
+    pass_input = input;
+}
+
+void Password::validate_input() {
+    int len_flag = 0, cap_flag = 0, num_flag = 0, sp_char_flag = 0;
+    std::regex cap_regex("([0-9]+)|([a-d]+)");
+    if (pass_input.length() >= 8 && pass_input.length() <= 26) {
+        len_flag = 1;
+        std::cout << "Long enough" << std::endl;
+    } else {
+        std::cout << "Too short" << std::endl;
+    }
+    if (int la = std::regex_search(pass_input, cap_regex)) {
+        std::cout << la << std::endl;
+    } else {
+        std::cout << la;
+    }
 }
